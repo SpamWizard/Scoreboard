@@ -51,19 +51,16 @@ class SaintconPusher:
         for entry in entries[:200]:
             names = entry.get("roster_names") or []
             detail = ", ".join(str(n) for n in names if n)
-            board_entries.append(
-                {
-                    "rank": int(entry["rank"]),
-                    "name": _clip(str(entry["team"]), 40),
-                    "score": float(entry["score"]),
-                    "detail": _clip(
-                        f"{entry.get('time_used', '')}"
-                        + (f" · {detail}" if detail else ""),
-                        60,
-                    ),
-                    "team": None,
-                }
-            )
+            row: dict[str, Any] = {
+                "rank": int(entry["rank"]),
+                "name": _clip(str(entry["team"]), 40),
+                "score": float(entry["score"]),
+                "team": None,
+            }
+            # Game length is standardized — do not publish time_used on the public board.
+            if detail:
+                row["detail"] = _clip(detail, 60)
+            board_entries.append(row)
         payload: dict[str, Any] = {
             "status": self.settings.push_status or "live",
             "frozen": False,

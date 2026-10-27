@@ -137,7 +137,7 @@ SCOREBOARD_PUSH_URL=https://saintcon.org/api/scoreboards/<id>
 SCOREBOARD_PUSH_TOKEN=<key>
 ```
 
-On each score change the aggregator builds ranked `entries` (`name` = team, `score`, `detail` = time + roster) and PUTs, debounced to ≥15 seconds.
+On each score change the aggregator builds ranked `entries` (`name` = team, `score`, `detail` = roster names only — game length is standardized so time used is not shown) and PUTs, debounced to ≥15 seconds.
 
 ## Layout
 

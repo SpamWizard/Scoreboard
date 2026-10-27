@@ -157,7 +157,7 @@ Content-Type: application/json
       "rank": 1,
       "name": "Orbit",
       "score": 42.5,
-      "detail": "12:34 · Ada, Ben, Cid",
+      "detail": "Ada, Ben, Cid",
       "team": null
     }
   ]
