@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://terminal-relay.local/schema/summary.schema.json",
+  "title": "Terminal Relay run summary",
+  "description": "Shape of results/<team_slug>/<UTC_timestamp>/summary.json written when a game ends. This is the payload nested under POST /api/v1/runs as `summary`.",
+  "type": "object",
+  "required": [
+    "ts",
+    "team",
+    "roster",
+    "started_at",
+    "finished_at",
+    "reason",
+    "score",
+    "time_used",
+    "time_used_seconds",
+    "game_limit_seconds",
+    "game_remaining",
+    "leg_remaining",
+    "players",
+    "counted_answers",
+    "attempts"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "ts": {
+      "type": "string",
+      "description": "UTC ISO-8601 timestamp when summary.json was written",
+      "examples": ["2026-10-19T21:12:34.123456+00:00"]
+    },
+    "team": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Team display name. Treat as unique event-wide."
+    },
+    "roster": {
+      "type": "array",
+      "description": "Players on the team (typically size 3)",
+      "items": {
+        "type": "object",
+        "required": ["player_number", "name"],
+        "additionalProperties": true,
+        "properties": {
+          "player_number": { "type": "integer", "minimum": 1 },
+          "name": { "type": "string" },
+          "person_index": { "type": "integer", "minimum": 0 },
+          "color": { "type": "string" }
+        }
+      }
+    },
+    "started_at": {
+      "type": "string",
+      "description": "Local wall-clock start time from the game PC"
+    },
+    "finished_at": {
+      "type": "string",
+      "description": "Local wall-clock finish time from the game PC"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Why the run ended (time up, all categories complete, etc.)"
+    },
+    "score": {
+      "type": "number",
+      "description": "Final team score (authoritative for ranking)"
+    },
+    "time_used": {
+      "type": "string",
+      "description": "Game-clock used, formatted like 12:34",
+      "pattern": "^[0-9]+:[0-5][0-9]$"
+    },
+    "time_used_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Game-clock used in seconds (tie-break: lower wins)"
+    },
+    "game_limit_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Allotted game time in seconds (often 1500; do not hardcode)"
+    },
+    "game_remaining": {
+      "type": "number",
+      "description": "Seconds left on the game clock at finish"
+    },
+    "leg_remaining": {
+      "type": "number",
+      "description": "Seconds left on the current leg at finish"
+    },
+    "players": {
+      "type": "array",
+      "description": "Per-player counted points",
+      "items": {
+        "type": "object",
+        "required": ["player_number", "name", "points"],
+        "additionalProperties": true,
+        "properties": {
+          "player_number": { "type": "integer", "minimum": 1 },
+          "name": { "type": "string" },
+          "points": { "type": "number" }
+        }
+      }
+    },
+    "counted_answers": {
+      "type": "array",
+      "description": "Last answer per question (redos replace earlier). May contain answer text — store on Pi, do not expose publicly."
+    },
+    "attempts": {
+      "type": "array",
+      "description": "Every answer/skip in order. May contain answer keys — store on Pi, do not expose publicly."
+    }
+  }
+}

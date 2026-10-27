@@ -1,0 +1,25 @@
+services:
+  scoreboard:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ./pi:/app
+      - scoreboard-data:/app/data
+    ports:
+      - "8080:8080"
+    environment:
+      SCOREBOARD_HOST: "0.0.0.0"
+      SCOREBOARD_PORT: "8080"
+      SCOREBOARD_DB_PATH: "data/scoreboard.db"
+      SCOREBOARD_TEAM_POLICY: "best"
+      SCOREBOARD_PUSH_URL: "${SCOREBOARD_PUSH_URL:-}"
+      SCOREBOARD_PUSH_TOKEN: "${SCOREBOARD_PUSH_TOKEN:-}"
+      SCOREBOARD_PUSH_STATUS: "${SCOREBOARD_PUSH_STATUS:-live}"
+      SCOREBOARD_PUSH_MESSAGE: "${SCOREBOARD_PUSH_MESSAGE:-}"
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt
+      && python run.py"
+    restart: unless-stopped
+
+volumes:
+  scoreboard-data:
