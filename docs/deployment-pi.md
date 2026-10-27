@@ -58,32 +58,14 @@ Open `http://<pi-ip>:8080/` and submit the example Orbit run (see README).
 
 ## systemd service
 
+A unit file ships in-repo at `pi/terminal-relay-scoreboard.service`. After adjusting `User=` / paths if needed:
+
 ```bash
-sudo tee /etc/systemd/system/terminal-relay-scoreboard.service >/dev/null <<'EOF'
-[Unit]
-Description=Terminal Relay Scoreboard Aggregator
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-User=pi
-WorkingDirectory=/home/pi/Scoreboard/pi
-Environment=PATH=/home/pi/Scoreboard/pi/.venv/bin
-ExecStart=/home/pi/Scoreboard/pi/.venv/bin/python run.py
-Restart=always
-RestartSec=3
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
+sudo cp ~/Scoreboard/pi/terminal-relay-scoreboard.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now terminal-relay-scoreboard
 sudo systemctl status terminal-relay-scoreboard
 ```
-
-Adjust `User=` / paths if your home directory differs.
 
 ## Firewall
 
