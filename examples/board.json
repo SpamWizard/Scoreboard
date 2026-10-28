@@ -1,0 +1,10 @@
+{
+  "status": "live",
+  "frozen": false,
+  "updated_at": "2026-10-28T19:04:00Z",
+  "message": "Terminal Relay",
+  "entries": [
+    { "rank": 1, "name": "Orbit", "score": 42.5, "detail": "Ada, Ben, Cid", "team": null },
+    { "rank": 2, "name": "Probe", "score": 30.0, "detail": "Dee, Eli, Fay" }
+  ]
+}

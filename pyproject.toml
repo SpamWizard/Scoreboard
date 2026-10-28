@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scoreboard"
+version = "1.0.0"
+description = "Push a board.json to the saintcon.org scoreboard API"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+scoreboard = "scoreboard.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["scoreboard*"]
